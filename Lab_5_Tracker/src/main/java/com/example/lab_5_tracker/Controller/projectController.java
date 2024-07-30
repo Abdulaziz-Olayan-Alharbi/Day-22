@@ -27,7 +27,7 @@ public class projectController {
     }
 
     @GetMapping("/get/{index}")
-    public ResponseEntity getProject(@Valid @PathVariable int index,Errors errors) {
+    public ResponseEntity getProject(@PathVariable int index) {
         if (errors.hasErrors()) {
             String message = errors.getFieldError().getDefaultMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
@@ -36,7 +36,7 @@ public class projectController {
     }
 
     @PutMapping("/update/{index}")
-    public ResponseEntity updateProject(@Valid@PathVariable int index ,@Valid@RequestBody Project project ,Errors errors) {
+    public ResponseEntity updateProject(@PathVariable int index ,@Valid@RequestBody Project project ,Errors errors) {
         if (errors.hasErrors()) {
             String message = errors.getFieldError().getDefaultMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
@@ -52,11 +52,7 @@ public class projectController {
     }
 
     @PutMapping("/status/update/{index}")
-    public ResponseEntity updateStatus(@Valid@PathVariable int index,Errors errors) {
-        if (errors.hasErrors()) {
-            String message = errors.getFieldError().getDefaultMessage();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
-        }
+    public ResponseEntity updateStatus(@PathVariable int index) {
         if(projects.get(index).getStatus().equals("Not Started")){
             projects.get(index).setStatus("In Progress");
         }else {
@@ -66,11 +62,7 @@ public class projectController {
     }
 
     @GetMapping("/search/{title}")
-    public ResponseEntity searchProjectByTitle(@Valid@PathVariable String title,Errors errors) {
-        if (errors.hasErrors()) {
-            String message = errors.getFieldError().getDefaultMessage();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
-        }
+    public ResponseEntity searchProjectByTitle(@PathVariable String title) {
         for (Project project : projects) {
             if (project.getTitle().equals(title)) {
                 return ResponseEntity.status(HttpStatus.OK).body(project);
@@ -85,11 +77,7 @@ public class projectController {
     }
 
     @GetMapping("/company/{company}")
-    public ResponseEntity getProjectsByCompanyName(@Valid@PathVariable String company,Errors errors) {
-        if (errors.hasErrors()) {
-            String message = errors.getFieldError().getDefaultMessage();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
-        }
+    public ResponseEntity getProjectsByCompanyName(@PathVariable String company) {
         ArrayList<Project> sameCompanyName = new ArrayList<>();
         for (Project project : projects) {
             if (project.getCompanyName().equals(company)) {

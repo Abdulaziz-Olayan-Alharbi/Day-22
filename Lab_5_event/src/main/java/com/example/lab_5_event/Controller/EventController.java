@@ -27,16 +27,12 @@ public class EventController {
     }
 
     @GetMapping("/get/{index}")
-    public ResponseEntity getEvent(@Valid @PathVariable int index,Errors errors) {
-        if (errors.hasErrors()) {
-            String message = errors.getFieldError().getDefaultMessage();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
-        }
+    public ResponseEntity getEvent(@PathVariable int index) {
         return ResponseEntity.status(HttpStatus.OK).body(events.get(index));
     }
 
     @PutMapping("/update/{index}")
-    public ResponseEntity updateEvent(@Valid@PathVariable int index ,@Valid@RequestBody Event event ,Errors errors) {
+    public ResponseEntity updateEvent(@PathVariable int index ,@Valid@RequestBody Event event ,Errors errors) {
         if (errors.hasErrors()) {
             String message = errors.getFieldError().getDefaultMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
@@ -57,7 +53,7 @@ public class EventController {
     }
 
     @PutMapping("/capacity/{index}")
-    public ResponseEntity changeCapacity (@Valid@PathVariable int index , @Valid@RequestBody int capacity,Errors errors){
+    public ResponseEntity changeCapacity (@PathVariable int index , @Valid@RequestBody int capacity,Errors errors){
         if (errors.hasErrors()) {
             String message = errors.getFieldError().getDefaultMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
@@ -67,7 +63,7 @@ public class EventController {
     }
 
     @GetMapping("search/{id}")
-    public ResponseEntity getById(@Valid@PathVariable String id,Errors errors) {
+    public ResponseEntity getById(@PathVariable String id,Errors errors) {
         if (errors.hasErrors()) {
             String message = errors.getFieldError().getDefaultMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
